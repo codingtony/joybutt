@@ -1,0 +1,25 @@
+If you plan to use joybutt for OpenWRT
+use the Makefile in the root directory 
+and don't forget to do a make kernel_menuconfig and build 
+the Joystick interface into the kernel.
+
+Otherwise, If you don't plan to use 
+OpenWRT,  use the Makefile located in src.
+
+Usage :
+./joybutt -f /dev/input/js0
+
+Joybutt will print on stdout button events 
+triggered by the joystick in this form :
+
+button_status TAB button#
+
+Button Status :
+0 = button pressed
+1 = button released
+
+Look src/joy.sh for a script example that uses joybutt.
+joy.sh is compatible with the shell provided by busybox 
+(on OpenWRT for example)
+
+
