@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
 	}
 	if (joydev == NULL) {
 		fprintf(stdout,"===============================================================\n");
-		fprintf(stdout,"joybutt %s - 2009-2010 by Tony Bussieres.\n",VERSION);
+		fprintf(stdout,"joybutt %s - 2009-2014 by Tony Bussieres.\n",VERSION);
 		fprintf(stdout,"GPLv3. get the license at http://www.gnu.org/copyleft/gpl.html\n");
 		fprintf(stdout,"===============================================================\n");
 		fprintf(stdout,"you need to pass the joystick device file -f /dev/input/jsXXX\n");
