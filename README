@@ -1,3 +1,9 @@
+Joybutt is a  very simple C program that outputs to the stdout the button Id when a button is pressed on a joystick.
+
+Can be useful to automate scripts using joystick's buttons as input.
+Has a very small footprint. This project is OpenWRT friendly.
+
+
 If you plan to use joybutt for OpenWRT
 use the Makefile in the root directory 
 and don't forget to do a make kernel_menuconfig and build 
