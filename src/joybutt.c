@@ -18,40 +18,41 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <linux/joystick.h>
 #include <ctype.h>
+#include <linux/input.h>
 
 
 
 int main(int argc, char **argv) { 
 	fd_set readstruct;
-	struct js_event event;
+	struct input_event event;
 	int maxfd = -1;
 	int fd = -1;
 	int c=-1;
-	char* joydev=NULL;
-	static char* VERSION="0.2";
+	char* inputdev=NULL;
+	static char* VERSION="0.3";
 	while ((c=getopt(argc,argv,"f:")) != -1) {
 		if (c=='f') {
-			joydev=optarg;
+			inputdev=optarg;
 		}
 	}
-	if (joydev == NULL) {
+	if (inputdev == NULL) {
 		fprintf(stdout,"===============================================================\n");
 		fprintf(stdout,"joybutt %s - 2009-2014 by Tony Bussieres.\n",VERSION);
+		fprintf(stdout,"This program reads key from input event device.\n");
 		fprintf(stdout,"GPLv3. get the license at http://www.gnu.org/copyleft/gpl.html\n");
 		fprintf(stdout,"===============================================================\n");
-		fprintf(stdout,"you need to pass the joystick device file -f /dev/input/jsXXX\n");
+		fprintf(stdout,"you need to pass the event device file -f /dev/input/eventXX\n");
 		return -1;
 	}
 	
-	fprintf(stdout,"Trying to open joystick : %s\n",joydev);
-	fd = open(joydev, O_RDONLY );
+	fprintf(stdout,"Trying to open input : %s\n",inputdev);
+	fd = open(inputdev, O_RDONLY );
 	if (fd < 0) {         
-		fprintf(stderr,"Failed to open joystick : %s\n",joydev);
+		fprintf(stderr,"Failed to open input : %s\n",inputdev);
 		return -1;
 	}
-	fprintf(stdout,"Open successful, reading joystick button event\n");
+	fprintf(stdout,"Open successful, reading key event\n");
 	FD_ZERO(&readstruct);
 	FD_SET( fd, &readstruct );
 	maxfd = fd+1;
@@ -69,14 +70,14 @@ int main(int argc, char **argv) {
 	  }
 	  else if( ret > 0 )
 	  { 
-		  int r = read( fd, &event, sizeof(struct js_event));
-		  if (r == sizeof(struct js_event)) {
-			  if (event.type == JS_EVENT_BUTTON) { // just capture button
-				  fprintf(stdout,"%d\t%d\n",event.value,event.number);
+		  int r = read( fd, &event, sizeof(struct input_event));
+		  if (r == sizeof(struct input_event)) {
+			  if (event.type == EV_KEY) { // just key event
+				  fprintf(stdout,"%d\t%d\n",event.value,event.code);
 				  fflush(stdout);
 			  }
 		  } else {
-			  fprintf(stderr,"Unable to read from joystick device!\n");
+			  fprintf(stderr,"Unable to read from device!\n");
 			  close(fd);
 			  return -1;
 		  }
