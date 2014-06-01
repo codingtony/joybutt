@@ -1,31 +1,27 @@
-Joybutt is a  very simple C program that outputs to the stdout the button Id when a button is pressed on a joystick.
+joybutt is a  very simple C program that outputs to the stdout the button Id when a button or key is pressed on a event device (keyboard, mouse, joystick)
 
-Can be useful to automate scripts using joystick's buttons as input.
+Can be useful to automate scripts using buttons or keys as input.
 Has a very small footprint. This project is OpenWRT friendly.
 
 
 If you plan to use joybutt for OpenWRT
 use the Makefile in the root directory 
-and don't forget to do a make kernel_menuconfig and build 
-the Joystick interface into the kernel.
 
 Otherwise, If you don't plan to use 
 OpenWRT,  use the Makefile located in src.
 
 Usage :
-./joybutt -f /dev/input/js0
+./joybutt -f /dev/input/event0
 
 Joybutt will print on stdout button events 
 triggered by the joystick in this form :
 
 button_status TAB button#
 
-Button Status :
-0 = button pressed
-1 = button released
+key status :
+0 = key pressed
+1 = key released
 
 Look src/joy.sh for a script example that uses joybutt.
 joy.sh is compatible with the shell provided by busybox 
 (on OpenWRT for example)
-
-
